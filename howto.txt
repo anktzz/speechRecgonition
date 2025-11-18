@@ -1,0 +1,29 @@
+# 1. Create virtual environment
+python3 -m venv venv
+source venv/bin/activate        # Linux/macOS
+venv\Scripts\activate           # Windows
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. (Optional) Create model directory if missing
+mkdir model
+
+# 4. Train the model
+python src/train_model.py
+
+# 5. Run the API server
+uvicorn api.main:app --reload
+
+# 6. Send audio to API for prediction (example)
+curl -X POST "http://127.0.0.1:8000/predict" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@your_audio.wav"
+
+# 7. Eg
+curl -X POST "http://127.0.0.1:8000/predict" \
+        -H "Content-Type: multipart/form-data" \
+        -F "file=@/home/crazy/Documents/python/speechRecgonition/data/dog/dog1.wav"
+
+{"sound":"dog"}
+
